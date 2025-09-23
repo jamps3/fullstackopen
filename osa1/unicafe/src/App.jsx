@@ -7,12 +7,34 @@ const Statistics = props => {
   }
   return (
     <div>
-      <p>good {props.good}</p>
-      <p>neutral {props.neutral}</p>
-      <p>bad {props.bad}</p>
+      <StatisticLine text="good" value={props.good} />
+      <StatisticLine text="neutral" value={props.neutral} />
+      <StatisticLine text="bad" value={props.bad} />
+      <StatisticLine text="all" value={props.all} />
+      <StatisticLine
+        text="average"
+        value={(props.good - props.bad) / props.all}
+      />
+      <StatisticLine
+        text="positive"
+        value={(props.good / props.all) * 100 + " %"}
+      />
     </div>
   )
 }
+
+const StatisticLine = props => {
+  return (
+    <p>
+      {props.text} {props.value}
+    </p>
+  )
+}
+
+const Button = props => (
+  <button onClick={props.handleClick}>{props.text}</button>
+)
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
@@ -22,9 +44,9 @@ const App = () => {
   return (
     <div>
       <h2>give feedback</h2>
-      <button onClick={() => setGood(good + 1)}>good</button>
-      <button onClick={() => setNeutral(neutral + 1)}>neutral</button>
-      <button onClick={() => setBad(bad + 1)}>bad</button>
+      <Button handleClick={() => setGood(good + 1)} text="good" />
+      <Button handleClick={() => setNeutral(neutral + 1)} text="neutral" />
+      <Button handleClick={() => setBad(bad + 1)} text="bad" />
       <h2>statistics</h2>
       <Statistics
         good={good}
