@@ -17,6 +17,11 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
+  const votes = { 0: 1, 1: 3, 2: 4, 3: 2 }
+
+  const copy = { ...votes }
+  // kasvatetaan olion kentän 2 arvoa yhdellä
+  copy[2] += 1
 
   return (
     <div>
