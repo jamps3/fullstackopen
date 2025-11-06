@@ -3,14 +3,10 @@ import axios from 'axios'
 import Filter from './Filter'
 import PersonForm from './PersonForm'
 import Persons from './Persons'
+import personService from './services/persons'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-1234567' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
@@ -32,10 +28,13 @@ const App = () => {
       return
     }
 
-    const newPerson = { name: newName, number: newNumber }
-    setPersons(persons.concat(newPerson))
-    setNewName('') // clear input
-    setNewNumber('') // clear input
+    personService
+      .create({ name: newName, number: newNumber })
+      .then(response => {
+        setPersons(persons.concat(response))
+        setNewName('') // clear input
+        setNewNumber('') // clear input
+      })
   }
 
   const handleFilterChange = (event) => {
@@ -53,6 +52,14 @@ const App = () => {
   const filteredPersons = persons.filter(person =>
     person.name.toLowerCase().includes(newFilter.toLowerCase())
   )
+
+  const deletePerson = (nameToDelete) => {
+    console.log("delete")
+    const confirmed = window.confirm(`Delete ${nameToDelete}?`)
+      if (confirmed) {
+        setPersons(persons.filter(person => person.name !== nameToDelete))
+      }
+  }
 
   return (
     <div>
