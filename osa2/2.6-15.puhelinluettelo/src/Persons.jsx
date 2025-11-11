@@ -1,4 +1,5 @@
 import axios from "axios"
+import Notification from './components/Notification'
 
 const Persons = ({ persons, setPersons }) => {
   const onDelete = (id, name) => {
@@ -8,10 +9,13 @@ const Persons = ({ persons, setPersons }) => {
         axios
         .delete(`http://localhost:3001/persons/${id}`)
         .then(() => {
+          setNotificationMessage(`Deleted '${name}'.`)
+          setNotificationType("success")
           setPersons(persons.filter(person => person.id !== id))
         })
         .catch(error => {
-          alert(`Person '${name}' was already removed from server`)
+          setNotificationMessage(`Person '${name}' was already removed from server`)
+          setNotificationType("error")
           setPersons(persons.filter(person => person.id !== id))
         })
       }
