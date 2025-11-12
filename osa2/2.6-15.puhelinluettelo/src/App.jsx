@@ -81,6 +81,32 @@ const App = () => {
       })
   }
 
+  const handleDelete = (id, name) => {
+    const confirmed = window.confirm(`Delete ${name}?`)
+    if (confirmed) {
+      personService
+        .deletePerson(id)
+        .then(() => {
+          setNotificationMessage(`Deleted '${name}'.`)
+          setNotificationType("success")
+          setPersons(persons.filter(person => person.id !== id))
+          setTimeout(() => {
+            setNotificationMessage(null)
+            setNotificationType(null)
+          }, 5000)
+        })
+        .catch(error => {
+          setNotificationMessage(`Person '${name}' was already removed from server`)
+          setNotificationType("error")
+          setPersons(persons.filter(person => person.id !== id))
+          setTimeout(() => {
+            setNotificationMessage(null)
+            setNotificationType(null)
+          }, 5000)
+        })
+    }
+  }
+
   const handleFilterChange = (event) => {
     setNewFilter(event.target.value)
   }
@@ -111,7 +137,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons persons={filteredPersons} setPersons={setPersons} />
+      <Persons persons={filteredPersons} onDelete={handleDelete} />
     </div>
   )
 }
