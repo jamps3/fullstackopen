@@ -26,7 +26,15 @@ let persons = [
 ]
 
 app.use(express.json())
-app.use(morgan('tiny'))
+
+// Luo oma token, joka loggaa req.body:n
+morgan.token("body", (req) => {
+  return JSON.stringify(req.body);
+});
+
+// Käytä tokenia logiformaatissa
+app.use(morgan(":method :url :status :res[content-length] - :response-time ms :body"));
+// app.use(morgan('tiny'))
 
 const generateId = () => {
   const maxId = Math.round(Math.random() * 1000000)
