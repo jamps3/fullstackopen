@@ -30,9 +30,7 @@ let persons = [
 app.use(express.json())
 
 const generateId = () => {
-  const maxId = persons.length > 0
-    ? Math.max(...persons.map(person => Number(person.id)))
-    : 0
+  const maxId = Math.round(Math.random() * 1000000)
   return String(maxId + 1)
 }
 
