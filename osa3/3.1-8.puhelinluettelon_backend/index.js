@@ -31,7 +31,7 @@ app.use(express.json())
 
 const generateId = () => {
   const maxId = persons.length > 0
-    ? Math.max(...persons.map(n => Number(n.id)))
+    ? Math.max(...persons.map(person => Number(person.id)))
     : 0
   return String(maxId + 1)
 }
@@ -39,21 +39,29 @@ const generateId = () => {
 app.post('/api/persons', (request, response) => {
   const body = request.body
 
-  if (!body.content) {
+  if (!body.name) {
     return response.status(400).json({ 
       error: 'content missing' 
     })
   }
 
-  const note = {
-    content: body.content,
-    important: body.important || false,
+  const person = {
+    name: body.name,
+    number: body.number,
     id: generateId(),
   }
 
-  persons = persons.concat(note)
+  persons = persons.concat(person)
 
-  response.json(note)
+  response.json(person)
+})
+
+app.get('/info', (request, response) => {
+  const date = new Date()
+  response.send(`
+    <p>Phonebook has info for ${persons.length} people</p>
+    <p>${date}</p>
+  `)
 })
 
 app.get('/', (request, response) => {
@@ -66,10 +74,10 @@ app.get('/api/persons', (request, response) => {
 
 app.get('/api/persons/:id', (request, response) => {
   const id = request.params.id
-  const note = persons.find(note => note.id === id)
+  const person = persons.find(person => person.id === id)
 
-  if (note) {
-    response.json(note)
+  if (person) {
+    response.json(person)
   } else {
     response.status(404).end()
   }
@@ -77,7 +85,7 @@ app.get('/api/persons/:id', (request, response) => {
 
 app.delete('/api/persons/:id', (request, response) => {
   const id = request.params.id
-  persons = persons.filter(note => note.id !== id)
+  persons = persons.filter(person => person.id !== id)
 
   response.status(204).end()
 })
