@@ -45,6 +45,7 @@ function App() {
 
   useEffect(() => {
     fetchCountries()
+    fetchWeather()
   }, [])
 
   const filtered = countries.filter(c =>
