@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "npm run dev",
-    "build": "npm run build",
     "lint": "eslint .",
     "server": "json-server -p 3001 db.json"
   },
