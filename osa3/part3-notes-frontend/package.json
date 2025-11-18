@@ -1,13 +1,12 @@
 {
-  "name": "part2-notes-frontend",
+  "name": "part3-notes-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "npm run dev",
+    "build": "npm run build",
     "lint": "eslint .",
-    "preview": "vite preview",
     "server": "json-server -p 3001 db.json"
   },
   "dependencies": {
