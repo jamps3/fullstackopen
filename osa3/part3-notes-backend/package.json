@@ -1,5 +1,5 @@
 {
-  "name": "notebackend",
+  "name": "part3-notes-backend",
   "version": "0.0.1",
   "description": "",
   "license": "MIT",
@@ -7,7 +7,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && cd ../part3-notes-frontend/ && npm run build && cp -r dist ../part3-notes-backend/",
+    "build:ui": "rm -rf dist && cd ../part3-notes-frontend/ && npm run build && cp -r dist ../part3-notes-backend/",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "start": "node index.js",
     "dev": "node --watch index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
