@@ -20,6 +20,7 @@ let notes = [
 ]
 
 app.use(express.json())
+app.use(express.static('dist'))
 
 const generateId = () => {
   const maxId = notes.length > 0
