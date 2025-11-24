@@ -1,0 +1,1 @@
+export default notes => String(Math.max(0, ...notes.map(n => +n.id)) + 1)
