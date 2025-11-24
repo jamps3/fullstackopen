@@ -25,6 +25,21 @@ router.post('/', (req, res) => {
   res.json(note)
 })
 
+router.put('/:id', (req, res) => {
+  const id = req.params.id
+  const { important } = req.body
+
+  const note = notes.find(n => n.id === id)
+  if (!note) {
+    return res.status(404).json({ error: 'note not found' })
+  }
+
+  const updatedNote = { ...note, important }
+  notes = notes.map(n => n.id === id ? updatedNote : n)
+
+  res.json(updatedNote)
+})
+
 router.delete('/:id', (req, res) => {
   notes = notes.filter(n => n.id !== req.params.id)
   res.status(204).end()
